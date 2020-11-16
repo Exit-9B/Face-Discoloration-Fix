@@ -27,10 +27,6 @@ void ApplyFaceDiscolorationFix()
 	static REL::Relocation<std::uintptr_t> hook_texture{ Offset::BSFaceGenDB_GenerateHeadPartModel, 0x3A4 };
 	REL::safe_write(hook_texture.address(), nop2);
 
-	// Try loading from DB
-	static REL::Relocation<std::uintptr_t> hook_queue{ Offset::BSFaceGenDB_LoadFromDB, 0x17D };
-	REL::safe_write(hook_queue.address(), nop2);
-
 	logger::info("Applied patches for face discoloration fix");
 }
 
@@ -42,7 +38,11 @@ void ApplyIgnorePreprocessedFacegen()
 	REL::safe_write(hook_npc1.address(), jcc6_to_jmp);
 	REL::safe_write(hook_npc2.address(), jcc2_to_jmp);
 
-	// Nothing to unload
+	// Loading from DB
+	static REL::Relocation<std::uintptr_t> hook_queue{ Offset::BSFaceGenDB_LoadFromDB, 0x17D };
+	REL::safe_write(hook_queue.address(), nop2);
+
+	// No model unload
 	static REL::Relocation<std::uintptr_t> hook_free{ Offset::HighProcessData_Unload, 0x26C };
 	REL::safe_write(hook_free.address(), jcc2_to_jmp);
 
