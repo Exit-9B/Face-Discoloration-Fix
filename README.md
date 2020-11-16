@@ -1,3 +1,3 @@
-# ExamplePlugin-CommonLibSSE
+# Face Discoloration Fix
 
-Basic plugin template for use with CommonLibSSE
+Removes dark faces and other discoloration issues from faulty FaceGen data.
