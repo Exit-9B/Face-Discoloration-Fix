@@ -24,8 +24,8 @@ void ApplyFaceDiscolorationFix()
 	REL::safe_write(hook_init.address(), jcc6_to_jmp);
 
 	// Fix dark face
-	static REL::Relocation<std::uintptr_t> hook_texture{ Offset::BSFaceGenDB_GenerateHeadPartModel, 0x3A4 };
-	REL::safe_write(hook_texture.address(), nop2);
+	static REL::Relocation<std::uintptr_t> hook_tint{ Offset::BSFaceGenDB_GenerateHeadPartModel, 0x3A4 };
+	REL::safe_write(hook_tint.address(), nop2);
 
 	logger::info("Applied patches for face discoloration fix");
 }
@@ -33,18 +33,18 @@ void ApplyFaceDiscolorationFix()
 void ApplyIgnorePreprocessedFacegen()
 {
 	// Always generate facegen
-	static REL::Relocation<std::uintptr_t> hook_npc1{ Offset::TESNPC_GetHeadModel, 0x61 };
-	static REL::Relocation<std::uintptr_t> hook_npc2{ Offset::TESNPC_GetHeadModel, 0x8A };
-	REL::safe_write(hook_npc1.address(), jcc6_to_jmp);
-	REL::safe_write(hook_npc2.address(), jcc2_to_jmp);
+	static REL::Relocation<std::uintptr_t> hook_getmodel1{ Offset::TESNPC_GetHeadModel, 0x61 };
+	static REL::Relocation<std::uintptr_t> hook_getmodel2{ Offset::TESNPC_GetHeadModel, 0x8A };
+	REL::safe_write(hook_getmodel1.address(), jcc6_to_jmp);
+	REL::safe_write(hook_getmodel2.address(), jcc2_to_jmp);
 
 	// Loading from DB
-	static REL::Relocation<std::uintptr_t> hook_queue{ Offset::BSFaceGenDB_LoadFromDB, 0x17D };
-	REL::safe_write(hook_queue.address(), nop2);
+	static REL::Relocation<std::uintptr_t> hook_load{ Offset::BSFaceGenDB_LoadFromDB, 0x17D };
+	REL::safe_write(hook_load.address(), nop2);
 
 	// No model unload
-	static REL::Relocation<std::uintptr_t> hook_free{ Offset::HighProcessData_Unload, 0x26C };
-	REL::safe_write(hook_free.address(), jcc2_to_jmp);
+	static REL::Relocation<std::uintptr_t> hook_unload{ Offset::HighProcessData_Unload, 0x26C };
+	REL::safe_write(hook_unload.address(), jcc2_to_jmp);
 
 	logger::info("Applied patches for ignoring preprocessed FaceGen");
 }
