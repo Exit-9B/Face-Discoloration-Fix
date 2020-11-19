@@ -1,5 +1,5 @@
 ﻿#include "version.h"
-#include "Patches.h"
+#include "Hooks.h"
 
 
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info)
@@ -55,7 +55,7 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_s
 
 	SKSE::Init(a_skse);
 
-	Patches::Apply();
+	Hooks::Install();
 
 	return true;
 }

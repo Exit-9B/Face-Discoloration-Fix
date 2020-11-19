@@ -1,4 +1,4 @@
-#include "Patches.h"
+#include "FaceGenManager.h"
 #include "Offsets.h"
 
 inline static std::array<uint8_t, 2> nop2{ 0x66, 0x90 };
@@ -6,7 +6,23 @@ inline static std::array<uint8_t, 6> nop6{ 0x66, 0x0F, 0x1F, 0x44, 0x00, 0x00 };
 inline static std::array<uint8_t, 1> jcc2_to_jmp{ 0xEB };
 inline static std::array<uint8_t, 2> jcc6_to_jmp{ 0x90, 0xE9 };
 
-void ApplyFaceDiscolorationFix()
+bool FaceGenManager::DataLoad_CheckRace(RE::TESNPC* a_actor)
+{
+	auto race = a_actor->race;
+	if (!race)
+	{
+		logger::warn(
+			"NPC '{}' ({:8x}) has no race.",
+			a_actor->fullName,
+			a_actor->formID);
+
+		return false;
+	}
+
+	return a_actor->tintLayers && a_actor->tintLayers->size() > 0;
+}
+
+void FaceGenManager::InstallFaceDiscolorationFix()
 {
 	// Load tint layers for all NPCs
 	static REL::Relocation<std::uintptr_t> hook_TINC{ Offset::TESNPC_ReadFromFileStream, 0x2EB };
@@ -27,10 +43,38 @@ void ApplyFaceDiscolorationFix()
 	static REL::Relocation<std::uintptr_t> hook_tint{ Offset::BSFaceGenDB_GenerateHeadPartModel, 0x3A4 };
 	REL::safe_write(hook_tint.address(), nop2);
 
-	logger::info("Applied patches for face discoloration fix");
+	constexpr REL::ID TESNPC_InitializeAfterAllFormsAreReadFromFile{ 24215 };
+	static REL::Relocation<std::uintptr_t> hook_dataload{ TESNPC_InitializeAfterAllFormsAreReadFromFile, 0x730 };
+
+	auto& trampoline = SKSE::GetTrampoline();
+
+	struct Patch : Xbyak::CodeGenerator
+	{
+		Patch(std::uintptr_t addr)
+		{
+			Xbyak::Label label;
+			L(label);
+
+			mov(rcx, r15);
+			mov(rax, addr);
+			call(rax);
+			test(al, al);
+			jz(label.getAddress() + 0x106);
+			mov(r12d, r14d);
+			nop(6);
+		}
+	};
+
+	Patch patch{ SKSE::unrestricted_cast<std::uintptr_t>(DataLoad_CheckRace) };
+	patch.ready();
+	assert(patch.getSize() == 0x20);
+
+	REL::safe_write(hook_dataload.address(), patch.getCode(), patch.getSize());
+
+	logger::info("Installed hooks for face discoloration fix");
 }
 
-void ApplyIgnorePreprocessedFacegen()
+void FaceGenManager::InstallIgnorePreprocessedFaceGen()
 {
 	// Always generate facegen
 	static REL::Relocation<std::uintptr_t> hook_getmodel1{ Offset::TESNPC_GetHeadModel, 0x61 };
@@ -46,18 +90,5 @@ void ApplyIgnorePreprocessedFacegen()
 	static REL::Relocation<std::uintptr_t> hook_unload{ Offset::HighProcessData_Unload, 0x26C };
 	REL::safe_write(hook_unload.address(), jcc2_to_jmp);
 
-	logger::info("Applied patches for ignoring preprocessed FaceGen");
-}
-
-void Patches::Apply()
-{
-	if (EnableFaceDiscolorationFix)
-	{
-		ApplyFaceDiscolorationFix();
-
-		if (IgnorePreprocessedFacegen)
-		{
-			ApplyIgnorePreprocessedFacegen();
-		}
-	}
+	logger::info("Installed hooks for ignoring preprocessed FaceGen");
 }
