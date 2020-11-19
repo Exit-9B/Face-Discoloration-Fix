@@ -43,8 +43,7 @@ void FaceGenManager::InstallFaceDiscolorationFix()
 	static REL::Relocation<std::uintptr_t> hook_tint{ Offset::BSFaceGenDB_GenerateHeadPartModel, 0x3A4 };
 	REL::safe_write(hook_tint.address(), nop2);
 
-	constexpr REL::ID TESNPC_InitializeAfterAllFormsAreReadFromFile{ 24215 };
-	static REL::Relocation<std::uintptr_t> hook_dataload{ TESNPC_InitializeAfterAllFormsAreReadFromFile, 0x730 };
+	static REL::Relocation<std::uintptr_t> hook_dataload{ Offset::TESNPC_InitializeAfterLoad, 0x730 };
 
 	auto& trampoline = SKSE::GetTrampoline();
 

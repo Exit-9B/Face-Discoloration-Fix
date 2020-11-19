@@ -3,6 +3,7 @@
 namespace Offset
 {
 	constexpr REL::ID TESNPC_ReadFromFileStream{ 24159 };
+	constexpr REL::ID TESNPC_InitializeAfterLoad{ 24215 };
 	constexpr REL::ID TESNPC_GetHeadModel{ 24227 };
 	constexpr REL::ID TESNPC_FinishInit{ 24272 };
 	constexpr REL::ID BSFaceGenDB_GenerateHeadPartModel{ 26259 };
