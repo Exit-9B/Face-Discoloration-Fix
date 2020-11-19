@@ -1,5 +1,5 @@
 ﻿#include "version.h"
-#include "Patches.h"
+#include "Hooks.h"
 
 
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info)
@@ -54,9 +54,8 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_s
 	logger::info("FacegenFixes loaded");
 
 	SKSE::Init(a_skse);
-	SKSE::AllocTrampoline(8);
 
-	Patches::Apply();
+	Hooks::Install();
 
 	return true;
 }

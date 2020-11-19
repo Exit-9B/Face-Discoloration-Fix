@@ -1,5 +1,6 @@
 #pragma once
 
+#define XBYAK64
 #include "RE/Skyrim.h"
 #include "SKSE/SKSE.h"
 

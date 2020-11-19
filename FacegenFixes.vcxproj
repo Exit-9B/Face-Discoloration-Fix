@@ -213,7 +213,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Patches.cpp" />
+    <ClCompile Include="src\FaceGenManager.cpp" />
+    <ClCompile Include="src\Hooks.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\PCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -227,7 +228,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Patches.h" />
+    <ClInclude Include="src\FaceGenManager.h" />
+    <ClInclude Include="src\Hooks.h" />
     <ClInclude Include="src\Offsets.h" />
     <ClInclude Include="src\PCH.h" />
     <ClInclude Include="src\version.h" />
