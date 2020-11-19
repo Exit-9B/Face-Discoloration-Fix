@@ -11,7 +11,7 @@ bool FaceGenManager::DataLoad_CheckRace(RE::TESNPC* a_actor)
 	auto race = a_actor->race;
 	if (!race)
 	{
-		logger::warn(
+		logger::error(
 			"NPC '{}' ({:8x}) has no race.",
 			a_actor->fullName,
 			a_actor->formID);
