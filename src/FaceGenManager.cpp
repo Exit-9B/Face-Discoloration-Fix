@@ -102,12 +102,12 @@ void FaceGenManager::InstallPerformanceTimers()
 }
 
 char FaceGenManager::PerformanceTimer_GetHeadModel(
-	RE::TESNPC* a_actor, void* a_arg2, void* a_arg3)
+	RE::TESNPC* a_actor, RE::BSTSmartPointer<RE::BSFaceGenNiNode>* a_result, void** a_arg3)
 {
-	logger::info("Getting head for NPC '{}' ({:8x}).", a_actor->fullName, a_actor->formID);
+	logger::info("Getting head for NPC '{}' ({:08x}).", a_actor->fullName, a_actor->formID);
 
 	auto begin = std::chrono::high_resolution_clock::now();
-	auto result = _GetHeadModel(a_actor, a_arg2, a_arg3);
+	auto result = _GetHeadModel(a_actor, a_result, a_arg3);
 	auto end = std::chrono::high_resolution_clock::now();
 
 	logger::info(

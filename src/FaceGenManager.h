@@ -12,7 +12,7 @@ private:
 	static bool DataLoad_CheckRace(RE::TESNPC* a_actor);
 
 	static char PerformanceTimer_GetHeadModel(
-		RE::TESNPC* a_actor, void* a_arg2, void* a_arg3);
+		RE::TESNPC* a_actor, RE::BSTSmartPointer<RE::BSFaceGenNiNode>* a_result, void** a_arg3);
 
 	inline static REL::Relocation<decltype(PerformanceTimer_GetHeadModel)> _GetHeadModel;
 };
