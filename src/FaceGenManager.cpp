@@ -6,22 +6,6 @@ inline static std::array<uint8_t, 6> nop6{ 0x66, 0x0F, 0x1F, 0x44, 0x00, 0x00 };
 inline static std::array<uint8_t, 1> jcc2_to_jmp{ 0xEB };
 inline static std::array<uint8_t, 2> jcc6_to_jmp{ 0x90, 0xE9 };
 
-bool FaceGenManager::DataLoad_CheckRace(RE::TESNPC* a_actor)
-{
-	auto race = a_actor->race;
-	if (!race)
-	{
-		logger::error(
-			"NPC '{}' ({:8x}) has no race.",
-			a_actor->fullName,
-			a_actor->formID);
-
-		return false;
-	}
-
-	return a_actor->tintLayers && a_actor->tintLayers->size() > 0;
-}
-
 void FaceGenManager::InstallFaceDiscolorationFix()
 {
 	// Load tint layers for all NPCs
@@ -43,9 +27,8 @@ void FaceGenManager::InstallFaceDiscolorationFix()
 	static REL::Relocation<std::uintptr_t> hook_tint{ Offset::BSFaceGenDB_GenerateHeadPartModel, 0x3A4 };
 	REL::safe_write(hook_tint.address(), nop2);
 
+	// Workaround for immediate crash with broken mods with bad race (RNAM) data
 	static REL::Relocation<std::uintptr_t> hook_dataload{ Offset::TESNPC_InitializeAfterLoad, 0x730 };
-
-	auto& trampoline = SKSE::GetTrampoline();
 
 	struct Patch : Xbyak::CodeGenerator
 	{
@@ -90,4 +73,20 @@ void FaceGenManager::InstallIgnorePreprocessedFaceGen()
 	REL::safe_write(hook_unload.address(), jcc2_to_jmp);
 
 	logger::info("Installed hooks for ignoring preprocessed FaceGen");
+}
+
+bool FaceGenManager::DataLoad_CheckRace(RE::TESNPC* a_actor)
+{
+	auto race = a_actor->race;
+	if (!race)
+	{
+		logger::error(
+			"NPC '{}' ({:8x}) has no race.",
+			a_actor->fullName,
+			a_actor->formID);
+
+		return false;
+	}
+
+	return a_actor->tintLayers && a_actor->tintLayers->size() > 0;
 }
