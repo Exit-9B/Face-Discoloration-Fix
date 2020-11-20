@@ -91,3 +91,28 @@ void FaceGenManager::InstallIgnorePreprocessedFaceGen()
 
 	logger::info("Installed hooks for ignoring preprocessed FaceGen");
 }
+
+void FaceGenManager::InstallPerformanceTimers()
+{
+	static REL::Relocation<std::uintptr_t> hook{ REL::ID{ 12937 }, 0x77 };
+
+	auto& trampoline = SKSE::GetTrampoline();
+
+	_GetHeadModel = trampoline.write_call<5>(hook.address(), PerformanceTimer_GetHeadModel);
+}
+
+char FaceGenManager::PerformanceTimer_GetHeadModel(
+	RE::TESNPC* a_actor, void* a_arg2, void* a_arg3)
+{
+	logger::info("Getting head for NPC '{}' ({:8x}).", a_actor->fullName, a_actor->formID);
+
+	auto begin = std::chrono::high_resolution_clock::now();
+	auto result = _GetHeadModel(a_actor, a_arg2, a_arg3);
+	auto end = std::chrono::high_resolution_clock::now();
+
+	logger::info(
+		"Finished in {}\x00b5s.",
+		std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count());
+
+	return result;
+}

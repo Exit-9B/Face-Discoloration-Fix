@@ -12,6 +12,8 @@ namespace Hooks
 			{
 				FaceGenManager::InstallIgnorePreprocessedFaceGen();
 			}
+
+			FaceGenManager::InstallPerformanceTimers();
 		}
 	}
 }
