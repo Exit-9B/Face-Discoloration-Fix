@@ -20,8 +20,3 @@ bSkipHeadPartsValidation = false
 # will significantly increase the initial startup time of the game, so make sure
 # to disable it when done.
 bScanOnStartup = false
-
-# Generate NIF files automatically if errors are detected from scanning.
-# Existing loose files in the Data folder may be overwritten.
-# This option only works if bScanOnStartup is also set.
-bGenerateFilesAfterScanning = false
