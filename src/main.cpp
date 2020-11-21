@@ -1,5 +1,7 @@
 ﻿#include "version.h"
+#include "Settings.h"
 #include "Hooks.h"
+#include "FaceGenManager.h"
 
 
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info)
@@ -52,8 +54,10 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_skse)
 {
 	logger::info("FacegenFixes loaded");
+	Settings::load();
 
 	SKSE::Init(a_skse);
+	SKSE::AllocTrampoline(28);
 
 	Hooks::Install();
 

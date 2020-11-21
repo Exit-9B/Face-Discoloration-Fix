@@ -1,0 +1,27 @@
+[FaceGen]
+# Logs a message when an NPC head is regenerated. Note that the log will be
+# cleared every time the game is started.
+bEnableFaceGenLogging = false
+
+# Force ALL heads to be generated at runtime. This will break NPC appearance
+# overhauls that use sculpted meshes instead of the standard face morphs. It
+# will also make NPCs use mesh and tintmask replacers which normally only affect
+# the player.
+bIgnorePreprocessedFaceGen = false
+
+# Always load provided FaceGen meshes without validating that the head parts
+# list matches plugin data. This will prevent NPC appearance overhauls from
+# being overridden by mods that edit the NPCs. Hair replacers and other similar
+# mods will not work unless FaceGen is exported using Creation Kit.
+# This option does nothing if bIgnorePreprocessedFaceGen is also set.
+bSkipHeadPartsValidation = false
+
+# Scan all NPCs on startup for head mesh issues, and log any errors found. This
+# will significantly increase the initial startup time of the game, so make sure
+# to disable it when done.
+bScanOnStartup = false
+
+# Generate NIF files automatically if errors are detected from scanning.
+# Existing loose files in the Data folder may be overwritten.
+# This option only works if bScanOnStartup is also set.
+bGenerateFilesAfterScanning = false

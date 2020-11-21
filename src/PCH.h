@@ -4,6 +4,10 @@
 #include "RE/Skyrim.h"
 #include "SKSE/SKSE.h"
 
+struct LPNLSVERSIONINFO;
+#include <stringapiset.h>
+#include "AutoTOML.hpp"
+
 #ifdef NDEBUG
 #include <spdlog/sinks/basic_file_sink.h>
 #else

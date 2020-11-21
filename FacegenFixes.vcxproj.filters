@@ -35,6 +35,9 @@
     <ClInclude Include="src\Hooks.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Settings.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />

@@ -4,8 +4,10 @@
 
 namespace Hooks
 {
-	inline static bool EnableFaceDiscolorationFix = true;
+	inline static bool EnableFaceGenLogging = false;
 	inline static bool IgnorePreprocessedFacegen = false;
+	inline static bool SkipHeadPartsValidation = false;
+	inline static bool ScanOnStartup = false;
 
 	void Install();
 }

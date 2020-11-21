@@ -1,17 +1,30 @@
 #include "Hooks.h"
+#include "Settings.h"
 
 namespace Hooks
 {
 	void Install()
 	{
-		if (EnableFaceDiscolorationFix)
-		{
-			FaceGenManager::InstallFaceDiscolorationFix();
+		FaceGenManager::InstallFaceDiscolorationFix();
 
-			if (IgnorePreprocessedFacegen)
-			{
-				FaceGenManager::InstallIgnorePreprocessedFaceGen();
-			}
+		if (*Settings::bEnableFaceGenLogging)
+		{
+			FaceGenManager::EnableFaceGenLogging();
+		}
+
+		if (*Settings::bIgnorePreprocessedFaceGen)
+		{
+			FaceGenManager::IgnorePreprocessedFaceGen();
+		}
+
+		if (*Settings::bSkipHeadPartsValidation)
+		{
+			FaceGenManager::SkipHeadPartsValidation();
+		}
+
+		if (*Settings::bScanOnStartup)
+		{
+			FaceGenManager::ScanOnStartup();
 		}
 	}
 }
