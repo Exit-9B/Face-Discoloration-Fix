@@ -25,27 +25,15 @@ struct Settings
 		}
 	}
 
-	inline static bSetting bEnableFaceGenLogging{
-		"FaceGen"s,
-		"bEnableFaceGenLogging"s,
-		false
-	};
+	inline static bSetting bEnableFaceGenLogging
+	{ "FaceGen"s, "bEnableFaceGenLogging"s, false };
 
-	inline static bSetting bIgnorePreprocessedFaceGen{
-		"FaceGen"s,
-		"bIgnorePreprocessedFaceGen"s,
-		false
-	};
+	inline static bSetting bIgnorePreprocessedFaceGen
+	{ "FaceGen"s, "bIgnorePreprocessedFaceGen"s, false };
 
-	inline static bSetting bSkipHeadPartsValidation{
-		"FaceGen"s,
-		"bSkipHeadPartsValidation"s,
-		false
-	};
+	inline static bSetting bSkipHeadPartsValidation
+	{ "FaceGen"s, "bSkipHeadPartsValidation"s, false };
 
-	inline static bSetting bScanOnStartup{
-		"FaceGen"s,
-		"bScanOnStartup"s,
-		false
-	};
+	inline static bSetting bScanOnStartup
+	{ "FaceGen"s, "bScanOnStartup"s, false };
 };
