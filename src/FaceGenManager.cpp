@@ -125,11 +125,11 @@ bool FaceGenManager::GetFaceGenModelPath(RE::TESNPC* a_actor, char* a_buffer)
 bool FaceGenManager::LoadFaceGen(
 	RE::TESNPC* a_actor,
 	RE::BSFaceGenNiNode** a_node,
-	void** a_arg3)
+	RE::BSResource::ID** a_resourceID)
 {
 	using func_t = decltype(LoadFaceGen);
 	static REL::Relocation<func_t> func{ Offset::TESNPC_LoadFaceGen };
-	return func(a_actor, a_node, a_arg3);
+	return func(a_actor, a_node, a_resourceID);
 }
 
 bool FaceGenManager::ModelExistsInDB(const char* a_path)
@@ -137,26 +137,6 @@ bool FaceGenManager::ModelExistsInDB(const char* a_path)
 	using func_t = decltype(ModelExistsInDB);
 	static REL::Relocation<func_t> func{ Offset::ModelExistsInDB };
 	return func(a_path);
-}
-
-bool FaceGenManager::ValidateFaceGenData(
-	RE::TESNPC* a_actor,
-	ValidateFaceGenData_Params* a_data)
-{
-	using func_t = decltype(ValidateFaceGenData);
-	static REL::Relocation<func_t> func{ Offset::TESNPC_ValidateFaceGenData };
-	return func(a_actor, a_data);
-}
-
-void FaceGenManager::ValidateAllFaceGenData()
-{
-	auto dataHandler = RE::TESDataHandler::GetSingleton();
-	auto npcArray = dataHandler->GetFormArray<RE::TESNPC>();
-
-	for (auto npc : npcArray)
-	{
-		ValidateFaceGen(npc);
-	}
 }
 
 bool FaceGenManager::DataLoad_CheckRace(RE::TESNPC* a_actor)
@@ -230,7 +210,7 @@ bool FaceGenManager::ValidateFaceGen(RE::TESNPC* a_actor)
 
 	if (!ModelExistsInDB(path))
 	{
-		auto filename = a_actor->GetFile()->fileName;
+		auto filename = a_actor->GetFile(0)->fileName;
 		bool silent =
 			strcmp(filename, "Skyrim.esm") == 0 ||
 			strcmp(filename, "Dawnguard.esm") == 0 ||
@@ -248,14 +228,9 @@ bool FaceGenManager::ValidateFaceGen(RE::TESNPC* a_actor)
 	}
 
 	RE::BSFaceGenNiNode* faceNode = nullptr;
-	void* a3 = nullptr;
+	RE::BSResource::ID* id = nullptr;
 
-	bool isFaceGenValid = LoadFaceGen(a_actor, &faceNode, &a3);
-
-	if (faceNode)
-	{
-		faceNode->DeleteThis();
-	}
+	bool isFaceGenValid = LoadFaceGen(a_actor, &faceNode, &id);
 
 	if (!isFaceGenValid)
 	{
@@ -265,6 +240,11 @@ bool FaceGenManager::ValidateFaceGen(RE::TESNPC* a_actor)
 			a_actor->GetFormID());
 
 		return false;
+	}
+
+	if (faceNode)
+	{
+		faceNode->DeleteThis();
 	}
 
 	return true;
