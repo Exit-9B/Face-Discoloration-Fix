@@ -11,8 +11,8 @@ bIgnorePreprocessedFaceGen = false
 
 # Always load provided FaceGen meshes without validating that the head parts
 # list matches plugin data. This will prevent NPC appearance overhauls from
-# being overridden by mods that edit the NPCs. Hair replacers and other similar
-# mods will not work unless FaceGen is exported using Creation Kit.
+# being overridden by mods that edit the NPCs. Hair replacers or other head part
+# replacers will not work unless FaceGen is exported using Creation Kit.
 # This option does nothing if bIgnorePreprocessedFaceGen is also set.
 bSkipHeadPartsValidation = false
 
