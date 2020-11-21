@@ -4,6 +4,9 @@
     <Filter Include="src">
       <UniqueIdentifier>{e487ea2f-dbf7-49c6-bd70-00519f35c76c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="header">
+      <UniqueIdentifier>{eb62428d-822d-47f0-8fd6-97833408bc0e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -12,31 +15,58 @@
     <ClCompile Include="src\PCH.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\FaceGenManager.cpp">
+    <ClCompile Include="src\Hooks.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Hooks.cpp">
+    <ClCompile Include="src\FaceDiscolorationManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ScanOnStartupManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IgnorePreprocessedFaceGenManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FaceGenLoggingManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HeadPartsValidationManager.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\PCH.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\version.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Offsets.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\FaceGenManager.h">
-      <Filter>src</Filter>
+    <ClInclude Include="src\FaceDiscolorationManager.h">
+      <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="src\Hooks.h">
-      <Filter>src</Filter>
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Offsets.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Patches.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PCH.h">
+      <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="src\Settings.h">
-      <Filter>src</Filter>
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\version.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ScanOnStartupManager.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IgnorePreprocessedFaceGenManager.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FaceGenLoggingManager.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HeadPartsValidationManager.h">
+      <Filter>header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

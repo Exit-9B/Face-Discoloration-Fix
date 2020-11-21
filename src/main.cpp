@@ -1,7 +1,6 @@
 ﻿#include "version.h"
 #include "Settings.h"
 #include "Hooks.h"
-#include "FaceGenManager.h"
 
 
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info)
