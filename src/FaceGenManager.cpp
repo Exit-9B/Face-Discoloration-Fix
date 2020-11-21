@@ -24,20 +24,27 @@ void FaceGenManager::InstallFaceDiscolorationFix()
 	REL::safe_write(hook_init.address(), jcc6_to_jmp);
 
 	// Fix dark face
-	static REL::Relocation<std::uintptr_t> hook_tint{ Offset::BSFaceGenDB_GenerateHeadPartModel, 0x3A4 };
+	static REL::Relocation<std::uintptr_t> hook_tint
+	{ Offset::BSFaceGenDB_GenerateHeadPartModel, 0x3A4 };
+
 	REL::safe_write(hook_tint.address(), nop2);
 
 	// Workaround for immediate crash with broken mods with bad race (RNAM) data
-	static REL::Relocation<std::uintptr_t> hook_dataload{ Offset::TESNPC_InitializeAfterLoad, 0x730 };
+	static REL::Relocation<std::uintptr_t> hook_dataload
+	{ Offset::TESNPC_InitializeAfterLoad, 0x730 };
 
-	struct Nop32 : Xbyak::CodeGenerator { Nop32() { nop(32, false); } } nop32;
+	struct Nop32 : Xbyak::CodeGenerator {
+		Nop32() {
+			nop(32, false);
+		}
+	};
+
+	Nop32 nop32;
 	nop32.ready();
 	assert(nop32.getSize() == 0x20);
 
-	struct Patch : Xbyak::CodeGenerator
-	{
-		Patch(std::uintptr_t addr)
-		{
+	struct Patch : Xbyak::CodeGenerator {
+		Patch(std::uintptr_t addr) : Xbyak::CodeGenerator(0x20) {
 			Xbyak::Label label;
 			L(label);
 
@@ -52,7 +59,6 @@ void FaceGenManager::InstallFaceDiscolorationFix()
 
 	Patch patch{ SKSE::unrestricted_cast<std::uintptr_t>(DataLoad_CheckRace) };
 	patch.ready();
-	assert(patch.getSize() <= 0x20);
 
 	REL::safe_write(hook_dataload.address(), nop32.getCode(), nop32.getSize());
 	REL::safe_write(hook_dataload.address(), patch.getCode(), patch.getSize());
@@ -100,7 +106,10 @@ void FaceGenManager::SkipHeadPartsValidation()
 void FaceGenManager::ScanOnStartup()
 {
 	auto& trampoline = SKSE::GetTrampoline();
-	static REL::Relocation<std::uintptr_t> hook_postload{ Offset::DataHandler_InitializeActorAfterLoad, 0x1DA };
+
+	static REL::Relocation<std::uintptr_t> hook_postload
+	{ Offset::DataHandler_InitializeActorAfterLoad, 0x1DA };
+
 	_FinishInitNPC = trampoline.write_call<5>(hook_postload.address(), Hook_FinishInitNPC);
 
 	logger::info("Installed hooks for scanning on startup");
