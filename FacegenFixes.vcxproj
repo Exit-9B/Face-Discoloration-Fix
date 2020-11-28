@@ -76,15 +76,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <VcpkgTriplet>$(VcpkgUserTriplet)-custom</VcpkgTriplet>
@@ -213,8 +217,11 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\FaceGenManager.cpp" />
+    <ClCompile Include="src\FaceDiscolorationManager.cpp" />
+    <ClCompile Include="src\FaceGenLoggingManager.cpp" />
+    <ClCompile Include="src\HeadPartsValidationManager.cpp" />
     <ClCompile Include="src\Hooks.cpp" />
+    <ClCompile Include="src\IgnorePreprocessedFaceGenManager.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\PCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -226,12 +233,19 @@
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</MultiProcessorCompilation>
     </ClCompile>
+    <ClCompile Include="src\ScanOnStartupManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\FaceGenManager.h" />
+    <ClInclude Include="src\FaceDiscolorationManager.h" />
+    <ClInclude Include="src\FaceGenLoggingManager.h" />
+    <ClInclude Include="src\HeadPartsValidationManager.h" />
     <ClInclude Include="src\Hooks.h" />
+    <ClInclude Include="src\IgnorePreprocessedFaceGenManager.h" />
     <ClInclude Include="src\Offsets.h" />
+    <ClInclude Include="src\Patches.h" />
     <ClInclude Include="src\PCH.h" />
+    <ClInclude Include="src\ScanOnStartupManager.h" />
+    <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\version.h" />
   </ItemGroup>
   <ItemGroup>
