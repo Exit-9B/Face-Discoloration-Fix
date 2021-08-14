@@ -1,10 +1,10 @@
 #include "FaceGenManager.h"
 #include "Offsets.h"
 
-inline static std::array<uint8_t, 2> nop2{ 0x66, 0x90 };
-inline static std::array<uint8_t, 6> nop6{ 0x66, 0x0F, 0x1F, 0x44, 0x00, 0x00 };
-inline static std::array<uint8_t, 1> jcc2_to_jmp{ 0xEB };
-inline static std::array<uint8_t, 2> jcc6_to_jmp{ 0x90, 0xE9 };
+inline static std::array<std::uint8_t, 2> nop2{ 0x66, 0x90 };
+inline static std::array<std::uint8_t, 6> nop6{ 0x66, 0x0F, 0x1F, 0x44, 0x00, 0x00 };
+inline static std::array<std::uint8_t, 1> jcc2_to_jmp{ 0xEB };
+inline static std::array<std::uint8_t, 2> jcc6_to_jmp{ 0x90, 0xE9 };
 
 void FaceGenManager::InstallFaceDiscolorationFix()
 {
@@ -14,18 +14,18 @@ void FaceGenManager::InstallFaceDiscolorationFix()
 	static REL::Relocation<std::uintptr_t> hook_TIAS{ Offset::TESNPC_ReadFromFileStream, 0x11E1 };
 	static REL::Relocation<std::uintptr_t> hook_TINV{ Offset::TESNPC_ReadFromFileStream, 0x1594 };
 
-	REL::safe_write(hook_TIAS.address(), nop6);
-	REL::safe_write(hook_TINV.address(), nop6);
-	REL::safe_write(hook_TINC.address(), nop6);
-	REL::safe_write(hook_TINI.address(), nop6);
+	REL::safe_write<std::uint8_t>(hook_TIAS.address(), nop6);
+	REL::safe_write<std::uint8_t>(hook_TINV.address(), nop6);
+	REL::safe_write<std::uint8_t>(hook_TINC.address(), nop6);
+	REL::safe_write<std::uint8_t>(hook_TINI.address(), nop6);
 
 	// Fix face discoloration
 	static REL::Relocation<std::uintptr_t> hook_init{ Offset::TESNPC_FinishInit, 0x2E };
-	REL::safe_write(hook_init.address(), jcc6_to_jmp);
+	REL::safe_write<std::uint8_t>(hook_init.address(), jcc6_to_jmp);
 
 	// Fix dark face
 	static REL::Relocation<std::uintptr_t> hook_tint{ Offset::BSFaceGenDB_GenerateHeadPartModel, 0x3A4 };
-	REL::safe_write(hook_tint.address(), nop2);
+	REL::safe_write<std::uint8_t>(hook_tint.address(), nop2);
 
 	// Workaround for immediate crash with broken mods with bad race (RNAM) data
 	static REL::Relocation<std::uintptr_t> hook_dataload{ Offset::TESNPC_InitializeAfterLoad, 0x730 };
@@ -47,7 +47,7 @@ void FaceGenManager::InstallFaceDiscolorationFix()
 		}
 	};
 
-	Patch patch{ SKSE::unrestricted_cast<std::uintptr_t>(DataLoad_CheckRace) };
+	Patch patch{ reinterpret_cast<std::uintptr_t>(DataLoad_CheckRace) };
 	patch.ready();
 	assert(patch.getSize() == 0x20);
 
@@ -61,16 +61,16 @@ void FaceGenManager::InstallIgnorePreprocessedFaceGen()
 	// Always generate facegen
 	static REL::Relocation<std::uintptr_t> hook_getmodel1{ Offset::TESNPC_GetHeadModel, 0x61 };
 	static REL::Relocation<std::uintptr_t> hook_getmodel2{ Offset::TESNPC_GetHeadModel, 0x8A };
-	REL::safe_write(hook_getmodel1.address(), jcc6_to_jmp);
-	REL::safe_write(hook_getmodel2.address(), jcc2_to_jmp);
+	REL::safe_write<std::uint8_t>(hook_getmodel1.address(), jcc6_to_jmp);
+	REL::safe_write<std::uint8_t>(hook_getmodel2.address(), jcc2_to_jmp);
 
 	// Loading from DB
 	static REL::Relocation<std::uintptr_t> hook_load{ Offset::BSFaceGenDB_LoadFromDB, 0x17D };
-	REL::safe_write(hook_load.address(), nop2);
+	REL::safe_write<std::uint8_t>(hook_load.address(), nop2);
 
 	// No model unload
 	static REL::Relocation<std::uintptr_t> hook_unload{ Offset::HighProcessData_Unload, 0x26C };
-	REL::safe_write(hook_unload.address(), jcc2_to_jmp);
+	REL::safe_write<std::uint8_t>(hook_unload.address(), jcc2_to_jmp);
 
 	logger::info("Installed hooks for ignoring preprocessed FaceGen");
 }

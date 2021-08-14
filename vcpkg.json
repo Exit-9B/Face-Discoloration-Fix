@@ -1,0 +1,14 @@
+{
+  "name": "facediscolorationfix",
+  "version-string": "1.0.1",
+  "description": "Removes dark faces and other discoloration issues from faulty FaceGen data.",
+  "homepage": "https://github.com/Exit-9B/Face-Discoloration-Fix",
+  "license": "MIT",
+  "dependencies": [
+    "boost-atomic",
+    "boost-stl-interfaces",
+    "span-lite",
+    "spdlog",
+    "xbyak"
+  ]
+}

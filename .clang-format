@@ -1,26 +1,26 @@
 ﻿---
 AccessModifierOffset: -4
-AlignAfterOpenBracket: DontAlign
+AlignAfterOpenBracket: AlwaysBreak
 AlignConsecutiveAssignments: 'false'
 AlignConsecutiveDeclarations: 'false'
 AlignConsecutiveMacros: 'false'
 AlignEscapedNewlines: Left
-AlignOperands: 'true'
+AlignOperands: DontAlign
 AlignTrailingComments: 'true'
 AllowAllArgumentsOnNextLine: 'false'
 AllowAllConstructorInitializersOnNextLine: 'false'
 AllowAllParametersOfDeclarationOnNextLine: 'false'
-AllowShortBlocksOnASingleLine: Empty
+AllowShortBlocksOnASingleLine: Never
 AllowShortCaseLabelsOnASingleLine: 'false'
-AllowShortFunctionsOnASingleLine: All
+AllowShortFunctionsOnASingleLine: InlineOnly
 AllowShortIfStatementsOnASingleLine: Never
-AllowShortLambdasOnASingleLine: All
-AllowShortLoopsOnASingleLine: 'true'
+AllowShortLambdasOnASingleLine: Empty
+AllowShortLoopsOnASingleLine: 'false'
 AlwaysBreakAfterReturnType: None
 AlwaysBreakBeforeMultilineStrings: 'true'
 AlwaysBreakTemplateDeclarations: 'Yes'
-BinPackArguments: 'true'
-BinPackParameters: 'true'
+BinPackArguments: 'false'
+BinPackParameters: 'false'
 BraceWrapping:
     AfterCaseLabel: 'true'
     AfterClass: 'true'
@@ -32,20 +32,21 @@ BraceWrapping:
     AfterStruct: 'true'
     AfterUnion: 'true'
     BeforeCatch: 'false'
-    BeforeElse: 'false'
+    BeforeElse: 'true'
+    BeforeLambdaBody: 'true'
     IndentBraces: 'false'
-    SplitEmptyFunction: 'false'
-    SplitEmptyNamespace: 'false'
-    SplitEmptyRecord: 'false'
+    SplitEmptyFunction: 'true'
+    SplitEmptyNamespace: 'true'
+    SplitEmptyRecord: 'true'
 BreakBeforeBinaryOperators: None
 BreakBeforeBraces: Custom
-BreakBeforeTernaryOperators: 'false'
+BreakBeforeTernaryOperators: 'true'
 BreakConstructorInitializers: AfterColon
 BreakInheritanceList: AfterColon
 BreakStringLiterals: 'true'
-ColumnLimit: 0
+ColumnLimit: 99
 CompactNamespaces: 'false'
-ConstructorInitializerAllOnOneLineOrOnePerLine: 'false'
+ConstructorInitializerAllOnOneLineOrOnePerLine: 'true'
 ConstructorInitializerIndentWidth: 4
 ContinuationIndentWidth: 4
 Cpp11BracedListStyle: 'false'
@@ -54,20 +55,22 @@ DerivePointerAlignment: 'false'
 DisableFormat: 'false'
 FixNamespaceComments: 'false'
 IncludeBlocks: Preserve
-IndentCaseBlocks: 'true'
+IndentCaseBlocks: 'false'
 IndentCaseLabels: 'false'
 IndentGotoLabels: 'false'
 IndentPPDirectives: None
 IndentWidth: 4
 IndentWrappedFunctionNames: 'true'
-KeepEmptyLinesAtTheStartOfBlocks: 'false'
+KeepEmptyLinesAtTheStartOfBlocks: 'true'
 Language: Cpp
 MaxEmptyLinesToKeep: 2
 NamespaceIndentation: All
+PenaltyBreakAssignment: 500
+PenaltyReturnTypeOnItsOwnLine: 1000
 PointerAlignment: Left
-ReflowComments : 'false'
-SortIncludes: 'true'
-SortUsingDeclarations: 'true'
+ReflowComments : 'true'
+SortIncludes: 'false'
+SortUsingDeclarations: 'false'
 SpaceAfterCStyleCast: 'false'
 SpaceAfterLogicalNot: 'false'
 SpaceAfterTemplateKeyword: 'true'
@@ -90,6 +93,6 @@ SpacesInSquareBrackets: 'false'
 Standard: c++17
 TabWidth: 4
 UseCRLF: 'true'
-UseTab: Always
+UseTab: ForContinuationAndIndentation
 
 ...
