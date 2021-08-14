@@ -66,7 +66,7 @@ void FaceGenManager::InstallFaceDiscolorationFix()
 
 	REL::safe_write(hook_dataload.address(), patch.getCode(), patch.getSize());
 
-	logger::info("Installed hooks for face discoloration fix");
+	logger::info("Installed hooks for face discoloration fix"sv);
 }
 
 void FaceGenManager::InstallIgnorePreprocessedFaceGen()
@@ -93,14 +93,14 @@ void FaceGenManager::InstallIgnorePreprocessedFaceGen()
 	};
 	REL::safe_write<std::uint8_t>(hook_unload.address(), jcc2_to_jmp);
 
-	logger::info("Installed hooks for ignoring preprocessed FaceGen");
+	logger::info("Installed hooks for ignoring preprocessed FaceGen"sv);
 }
 
 bool FaceGenManager::DataLoad_CheckRace(RE::TESNPC* a_actor)
 {
 	auto race = a_actor->race;
 	if (!race) {
-		logger::error("NPC '{}' ({:8x}) has no race.", a_actor->fullName, a_actor->formID);
+		logger::error("NPC '{}' ({:8x}) has no race."sv, a_actor->fullName, a_actor->formID);
 		return false;
 	}
 
