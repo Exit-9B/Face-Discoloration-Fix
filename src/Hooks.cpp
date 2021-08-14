@@ -4,14 +4,9 @@ namespace Hooks
 {
 	void Install()
 	{
-		if (EnableFaceDiscolorationFix)
-		{
-			FaceGenManager::InstallFaceDiscolorationFix();
+		FaceGenManager::InstallFaceDiscolorationFix();
 
-			if (IgnorePreprocessedFacegen)
-			{
-				FaceGenManager::InstallIgnorePreprocessedFaceGen();
-			}
-		}
+		// Don't use this, it basically just disables the INI setting to use preprocessed facegen
+		//FaceGenManager::InstallIgnorePreprocessedFaceGen();
 	}
 }

@@ -1,8 +1,9 @@
 #pragma once
 
-#define XBYAK64
 #include "RE/Skyrim.h"
 #include "SKSE/SKSE.h"
+
+#include <xbyak/xbyak.h>
 
 #ifdef NDEBUG
 #include <spdlog/sinks/basic_file_sink.h>
@@ -15,3 +16,5 @@ using namespace std::literals;
 namespace logger = SKSE::log;
 
 #define DLLEXPORT __declspec(dllexport)
+
+#include "Version.h"
