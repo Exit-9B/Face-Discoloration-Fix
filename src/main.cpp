@@ -41,10 +41,15 @@ void InitLogger()
 extern "C" DLLEXPORT constinit auto SKSEPlugin_Version =
 []() {
 	SKSE::PluginVersionData v{};
+
 	v.pluginVersion = Version::MAJOR;
 	v.PluginName(Version::PROJECT);
 	v.AuthorName("Parapets"sv);
+
 	v.UsesAddressLibrary(true);
+	v.HasNoStructUse(true);
+	v.UsesStructsPost629(false);
+
 	return v;
 }();
 

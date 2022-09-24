@@ -2,8 +2,11 @@ cmake_minimum_required(VERSION 3.20)
 
 # ---- Options ----
 
-option(COPY_BUILD "Copy the build output to the Skyrim directory." OFF)
 option(BUILD_SKYRIMVR "Build the mod for Skyrim VR" OFF)
+
+if(CMAKE_GENERATOR MATCHES "Visual Studio")
+	option(CMAKE_VS_INCLUDE_INSTALL_TO_DEFAULT_BUILD "Include INSTALL target to default build." OFF)
+endif()
 
 # ---- Cache build vars ----
 
@@ -33,7 +36,7 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>" CACHE STR
 
 project(
     FaceGenFixes
-	VERSION 1.0.2
+	VERSION 1.0.3
 	LANGUAGES CXX
 )
 
@@ -85,7 +88,7 @@ endif()
 
 # ---- Dependencies ----
 
-add_subdirectory(extern/CommonLibSSE CommonLibSSE)
+add_subdirectory(extern/CommonLibSSE CommonLibSSE EXCLUDE_FROM_ALL)
 
 find_package(spdlog REQUIRED)
 find_path(XBYAK_INCLUDE_DIRS "xbyak/xbyak.h")
@@ -201,18 +204,16 @@ target_precompile_headers(
 
 # ---- Post build ----
 
-if (COPY_BUILD)
-	if (DEFINED Skyrim64Path)
-		add_custom_command(
-			TARGET ${PROJECT_NAME}
-			POST_BUILD
-			COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${PROJECT_NAME}> ${Skyrim64Path}/Data/SKSE/Plugins/
-			COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_PDB_FILE:${PROJECT_NAME}> ${Skyrim64Path}/Data/SKSE/Plugins/
-		)
-	else ()
-		message(
-			WARNING
-			"Variable Skyrim64Path is not defined. Skipping post-build copy command."
-		)
-	endif ()
-endif ()
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+	set(CMAKE_INSTALL_PREFIX "${Skyrim64Path}/Data" CACHE PATH
+		"Install path prefix (e.g. Skyrim Data directory or Mod Organizer virtual directory)."
+		FORCE
+	)
+endif()
+
+install(
+	FILES
+		"$<TARGET_FILE:${PROJECT_NAME}>"
+		"$<TARGET_PDB_FILE:${PROJECT_NAME}>"
+	DESTINATION "SKSE/Plugins"
+)
