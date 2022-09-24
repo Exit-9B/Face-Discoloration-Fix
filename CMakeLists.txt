@@ -41,8 +41,8 @@ project(
 )
 
 configure_file(
-	${CMAKE_CURRENT_SOURCE_DIR}/cmake/Version.h.in
-	${CMAKE_CURRENT_BINARY_DIR}/include/Version.h
+	${CMAKE_CURRENT_SOURCE_DIR}/cmake/Plugin.h.in
+	${CMAKE_CURRENT_BINARY_DIR}/src/Plugin.h
 	@ONLY
 )
 
@@ -108,7 +108,7 @@ source_group(
 	TREE
 		${CMAKE_CURRENT_BINARY_DIR}
 	FILES
-		${CMAKE_CURRENT_BINARY_DIR}/include/Version.h
+		${CMAKE_CURRENT_BINARY_DIR}/src/Plugin.h
 )
 
 # ---- Create DLL ----
@@ -117,7 +117,7 @@ add_library(
 	${PROJECT_NAME}
 	SHARED
 	${SOURCES}
-	${CMAKE_CURRENT_BINARY_DIR}/include/Version.h
+	${CMAKE_CURRENT_BINARY_DIR}/src/Plugin.h
 	${CMAKE_CURRENT_BINARY_DIR}/version.rc
 	.clang-format
 	.editorconfig
@@ -132,7 +132,7 @@ target_compile_features(
 target_include_directories(
 	${PROJECT_NAME}
 	PRIVATE
-        ${CMAKE_CURRENT_BINARY_DIR}/include
+        ${CMAKE_CURRENT_BINARY_DIR}/src
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${XBYAK_INCLUDE_DIRS}
 )
