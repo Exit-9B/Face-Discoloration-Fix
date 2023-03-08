@@ -1,13 +1,10 @@
 {
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
   "name": "facediscolorationfix",
-  "version-string": "1.0.2",
-  "description": "Removes dark faces and other discoloration issues from faulty FaceGen data.",
-  "homepage": "https://github.com/Exit-9B/Face-Discoloration-Fix",
-  "license": "MIT",
+  "version": "1",
   "dependencies": [
     "boost-stl-interfaces",
     "rsm-binary-io",
-    "span-lite",
     "spdlog",
     "xbyak"
   ]

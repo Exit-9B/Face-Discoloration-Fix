@@ -1,3 +1,6 @@
-[submodule "extern/CommonLibSSE"]
-	path = extern/CommonLibSSE
+[submodule "external/CommonLibSSE"]
+	path = external/CommonLibSSE
 	url = https://github.com/Exit-9B/CommonLibSSE.git
+[submodule "tools/SKSE-CMakeModules"]
+	path = tools/SKSE-CMakeModules
+	url = https://github.com/Exit-9B/SKSE-CMakeModules.git
