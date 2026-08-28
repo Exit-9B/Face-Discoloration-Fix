@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.22)
 
 project(
     FaceGenFixes
-	VERSION 1.0.3
+	VERSION 1.0.4
 	LANGUAGES CXX
 )
 
